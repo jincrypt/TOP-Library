@@ -18,6 +18,7 @@ function createRow(book) {
     let table = document.querySelector("table");
     let row = document.createElement('tr');
     row.setAttribute('data-id', book.id);
+    row.className = "bookList";
     let title = document.createElement('td');
     title.textContent = book.title;
 
@@ -27,10 +28,14 @@ function createRow(book) {
     let pages = document.createElement('td');
     pages.textContent = book.pages;
 
-    let read = document.createElement('td');
-    read.textContent = book.read;
+    let readBox = document.createElement('td');
+    let readButton = document.createElement('input')
+    readButton.setAttribute('type', 'checkbox')
+    readButton.checked = book.read;
+    readButton.addEventListener('click', (e) => {
+        updateReadStatus(book);
+    })
     
-    row.className = "bookList";
 
     let deleteBox = document.createElement('td');
     let deleteButton = document.createElement('button');
@@ -45,10 +50,20 @@ function createRow(book) {
     row.appendChild(title);
     row.appendChild(author);
     row.appendChild(pages);
-    row.appendChild(read);
+    readBox.appendChild(readButton);
+    row.appendChild(readBox);
     row.appendChild(deleteBox);
     table.appendChild(row);
     
+}
+
+function updateReadStatus(book) {
+    for (i = 0; i < myLibrary.length; i++) {
+        if (myLibrary[i].id === book.id) {
+            myLibrary[i].read = !myLibrary[i].read;
+            break;
+        }
+    }
 }
 
 function removeBook(id) {
@@ -68,7 +83,7 @@ function clearDisplay() {
     })
 }
 
-addBookToLibrary(new Book('Test1', 'Test2', 777, false,-1));
+addBookToLibrary(new Book('Test1', 'Test2', 777, true,-1));
 // Complete submit and cacnel buttons
 // next steps on odin project
 
