@@ -17,6 +17,7 @@ function addBookToLibrary(book) {
 function createRow(book) {
     let table = document.querySelector("table");
     let row = document.createElement('tr');
+    row.id = `Row${book.id}`;
     let title = document.createElement('td');
     title.textContent = book.title;
 
@@ -31,23 +32,27 @@ function createRow(book) {
     
     row.className = "bookList";
 
-    let delete = document.createElement('td')
+    let deleteBox = document.createElement('td');
     let deleteButton = document.createElement('button');
     deleteButton.id = 'delete-button';
     deleteButton.innerHTML = 'Delete'
 
-    deleteButton.addEventListener('onclick', (e) => {
+    deleteButton.addEventListener('click', (e) => {
         removeBook(book.id)
     })
 
-    delete.appendChild(deleteButton);
+    deleteBox.appendChild(deleteButton);
     row.appendChild(title);
     row.appendChild(author);
     row.appendChild(pages);
     row.appendChild(read);
-    row.appendChild(delete);
+    row.appendChild(deleteBox);
     table.appendChild(row);
     
+}
+
+function removeBook(id) {
+    document.querySelector(`#Row${id}`).remove();
 }
 
 function displayBooks() {
@@ -61,7 +66,6 @@ function clearDisplay() {
     document.querySelectorAll(".bookList").forEach(row => {
         document.querySelector("table").removeChild(row)
     })
-    index = 0;
 }
 
 addBookToLibrary(new Book('Test1', 'Test2', 777, false,-1));
@@ -85,6 +89,6 @@ function buttonSubmit() {
     }
     
     let newBook = new Book(title, author, pages, isRead, index);
+    addBookToLibrary(newBook);
     index++;
-    addBookToLibrary(newBook)
 }
