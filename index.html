@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=no">
+    <link rel="shortcut icon" href="Style/favicon.ico" type="image/x-icon">
+    <!-- <link rel="stylesheet" href="./Style/reset.css"> -->
+    <link rel="stylesheet" href="./Style/style.css">
+    <title>Document</title>
+</head>
+<body>
+    <table>
+        <tbody>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Pages</th>
+                <th>Read</th>
+            </tr>      
+            <tr>
+                <td>Testo</td>
+                <td>Tester</td>
+                <td>7777</td>
+                <td>False</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <form>
+        <label for="title">Title</label>
+        <input id="title" type="text" placeholder="Title" required="" autocomplete="off">
+        <label for="author">Author</label>
+        <input id="author" type="text" placeholder="Author" required autocomplete="off"> 
+        <label for="pages">Total Pages</label>
+        <input id="pages" type="number" placeholder="Total Pages" min="0" required autocomplete="off">
+        <label for="read">Read</label>
+        <input id="read" type="checkbox" autocomplete="off">
+
+        <input type="submit" id="submit" value="Submit">
+        <button type="button" id="cancel">Cancel</button>
+    </form>
+</body>
+<script src="./Script/app.js"></script>
+</html>
