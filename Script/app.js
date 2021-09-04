@@ -17,7 +17,7 @@ function addBookToLibrary(book) {
 function createRow(book) {
     let table = document.querySelector("table");
     let row = document.createElement('tr');
-    row.id = `Row${book.id}`;
+    row.setAttribute('data-id', book.id);
     let title = document.createElement('td');
     title.textContent = book.title;
 
@@ -52,7 +52,7 @@ function createRow(book) {
 }
 
 function removeBook(id) {
-    document.querySelector(`#Row${id}`).remove();
+    document.querySelector(`[data-id='${id}']`).remove();
 }
 
 function displayBooks() {
