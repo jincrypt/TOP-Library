@@ -1,5 +1,53 @@
+
 let myLibrary = [];
 let index = 0;
+
+// Local Storage
+function storageAvailable(type) {
+    var storage;
+    try {
+        storage = window[type];
+        var x = '__storage_test__';
+        storage.setItem(x, x);
+        storage.removeItem(x);
+        return true;
+    }
+    catch(e) {
+        return e instanceof DOMException && (
+            // everything except Firefox
+            e.code === 22 ||
+            // Firefox
+            e.code === 1014 ||
+            // test name field too, because code might not be present
+            // everything except Firefox
+            e.name === 'QuotaExceededError' ||
+            // Firefox
+            e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
+            // acknowledge QuotaExceededError only if there's something already stored
+            (storage && storage.length !== 0);
+    }
+}
+
+
+// Initiate if Local Storage Exists
+if (storageAvailable('localStorage')) {
+    if (localStorage.getItem('storedLibrary')) {
+        let retrievedLibrary = JSON.parse(localStorage.getItem('storedLibrary'));
+        myLibrary = [...retrievedLibrary];
+        if (myLibrary.length !=  0) {
+            displayBooks();
+        }
+    }
+}
+
+
+function updateStorage() {
+    if (storageAvailable('localStorage')) {
+        localStorage.setItem('storedLibrary', JSON.stringify(myLibrary));
+    }
+}
+
+
 
 function Book(title, author, pages, read, id) {
     this.title = title
@@ -67,7 +115,12 @@ function updateReadStatus(book) {
 }
 
 function removeBook(id) {
-    document.querySelector(`[data-id='${id}']`).remove();
+    myLibrary.splice(id, 1);
+    for (let i = id; i < myLibrary.length; i++) {
+        myLibrary[i].id = myLibrary[i].id - 1;
+    }
+    index--;
+    displayBooks();
 }
 
 function displayBooks() {
@@ -102,12 +155,13 @@ function buttonSubmit() {
     let newBook = new Book(title, author, pages, isRead, index);
     addBookToLibrary(newBook);
     index++;
+    updateStorage();
 }
 
-// Tests
-addBookToLibrary(new Book('Test1', 'Author 1', 777, true, index));
-index++;
-addBookToLibrary(new Book('Test2', 'Author 2', 327, false, index));
-index++;
-addBookToLibrary(new Book('Test3', 'Author 3', 7, true, index));
-index++;
+// // Tests
+// addBookToLibrary(new Book('Test1', 'Author 1', 777, true, index));
+// index++;
+// addBookToLibrary(new Book('Test2', 'Author 2', 327, false, index));
+// index++;
+// addBookToLibrary(new Book('Test3', 'Author 3', 7, true, index));
+// index++;
