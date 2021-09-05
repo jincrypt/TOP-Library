@@ -83,10 +83,6 @@ function clearDisplay() {
     })
 }
 
-addBookToLibrary(new Book('Test1', 'Test2', 777, true,-1));
-// Complete submit and cacnel buttons
-// next steps on odin project
-
 let form = document.querySelector('form')
 form.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -107,3 +103,11 @@ function buttonSubmit() {
     addBookToLibrary(newBook);
     index++;
 }
+
+// Tests
+addBookToLibrary(new Book('Test1', 'Author 1', 777, true, index));
+index++;
+addBookToLibrary(new Book('Test2', 'Author 2', 327, false, index));
+index++;
+addBookToLibrary(new Book('Test3', 'Author 3', 7, true, index));
+index++;
