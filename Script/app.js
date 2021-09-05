@@ -31,6 +31,9 @@ function storageAvailable(type) {
 
 // Initiate if Local Storage Exists
 if (storageAvailable('localStorage')) {
+    if (localStorage.getItem('storedIndex')) {
+        index = localStorage.getItem('storedIndex');
+    }
     if (localStorage.getItem('storedLibrary')) {
         let retrievedLibrary = JSON.parse(localStorage.getItem('storedLibrary'));
         myLibrary = [...retrievedLibrary];
@@ -44,9 +47,9 @@ if (storageAvailable('localStorage')) {
 function updateStorage() {
     if (storageAvailable('localStorage')) {
         localStorage.setItem('storedLibrary', JSON.stringify(myLibrary));
+        localStorage.setItem('storedIndex', index);
     }
 }
-
 
 
 function Book(title, author, pages, read, id) {
@@ -109,6 +112,7 @@ function updateReadStatus(book) {
     for (i = 0; i < myLibrary.length; i++) {
         if (myLibrary[i].id === book.id) {
             myLibrary[i].read = !myLibrary[i].read;
+            updateStorage();
             break;
         }
     }
@@ -128,6 +132,7 @@ function displayBooks() {
     myLibrary.forEach(book => {
         createRow(book);
     })
+    updateStorage();
 }
 
 function clearDisplay() {
@@ -153,9 +158,8 @@ function buttonSubmit() {
     }
     
     let newBook = new Book(title, author, pages, isRead, index);
-    addBookToLibrary(newBook);
     index++;
-    updateStorage();
+    addBookToLibrary(newBook);
 }
 
 // // Tests
