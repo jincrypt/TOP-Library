@@ -51,19 +51,21 @@ function updateStorage() {
     }
 }
 
+class Book {
+    constructor(title, author, pages, read, id) {
+        this.title = title
+        this.author = author
+        this.pages = pages
+        this.read = read
+        this.id = id
+    }
 
-function Book(title, author, pages, read, id) {
-    this.title = title
-    this.author = author
-    this.pages = pages
-    this.read = read
-    this.id = id
+    addBookToLibrary() {
+        myLibrary.push(this);
+        displayBooks();
+    }
 }
 
-function addBookToLibrary(book) {
-    myLibrary.push(book);
-    displayBooks();
-}
 
 function createRow(book) {
     let table = document.querySelector("table");
@@ -105,7 +107,6 @@ function createRow(book) {
     row.appendChild(readBox);
     row.appendChild(deleteBox);
     table.appendChild(row);
-    
 }
 
 function updateReadStatus(book) {
@@ -159,7 +160,7 @@ function buttonSubmit() {
     
     let newBook = new Book(title, author, pages, isRead, index);
     index++;
-    addBookToLibrary(newBook);
+    newBook.addBookToLibrary();
 }
 
 // // Tests
